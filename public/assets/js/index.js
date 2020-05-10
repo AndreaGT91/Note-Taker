@@ -1,3 +1,4 @@
+console.log('in index.js');
 var $noteTitle = $(".note-title");
 var $noteText = $(".note-textarea");
 var $saveNoteBtn = $(".save-note");
@@ -140,4 +141,6 @@ $noteTitle.on("keyup", handleRenderSaveBtn);
 $noteText.on("keyup", handleRenderSaveBtn);
 
 // Gets and renders the initial list of notes
+console.log('about to render');
 getAndRenderNotes();
+console.log('just rendered');

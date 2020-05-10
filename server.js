@@ -27,9 +27,20 @@ app.get("/api/notes", function(req, res) {
 });
 
 app.post("/api/notes", function(req, res) {
-  notes.push(req.body);
+  const newNote = req.body;
+  // if note doesn't have an id yet (new note vs. updated note), assign id the current date/time
+  if (!newNote.id) {
+    newNote.id = (new Date()).now();
+  };
+  notes.push(newNote);
   fs.writeFileSync(outputPath, notes);
-  res.json(req.body);
-}); 
+  res.json(newNote);
+});
+
+app.delete("/api/notes/:id", function(req, res) {
+  notes.splice(notes.findIndex(note => {return (note.id === req.params.id)}), 1);
+  fs.writeFileSync(outputPath, notes);
+  // TODO: what to return???
+});
 
 app.listen(PORT, console.log("Server starting on PORT ", PORT));
