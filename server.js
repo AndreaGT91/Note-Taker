@@ -21,7 +21,6 @@ app.get("/notes", function(req, res) {
 app.get("/api/notes", function(req, res) {
   const notesArray = fs.readFileSync(outputPath, "utf8");
   notes = JSON.parse(notesArray);
-  console.log(notesArray);
   return res.json(notes);
 });
 
@@ -39,16 +38,24 @@ app.post("/api/notes", function(req, res) {
   if (!newNote.id) {
     newNote.id = Date.now();
   };
-  console.log(newNote);
   notes.push(newNote);
   fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2));
   res.json(newNote);
 });
 
 app.delete("/api/notes/:id", function(req, res) {
-  notes.splice(notes.findIndex(note => {return (note.id === req.params.id)}), 1);
-  fs.writeFileSync(outputPath, JSON.stringify(notes));
-  // TODO: what to return???
+  // Must use '==', not '===', because one is numeric and one is string
+  const noteIndex = notes.findIndex(note => {return (note.id == req.params.id)});
+
+  // The ID should always be found, but check, just in case
+  if (noteIndex != -1) {
+    notes.splice(noteIndex, 1);
+    fs.writeFileSync(outputPath, JSON.stringify(notes));
+    return true
+  }
+  else {
+    return false
+  };
 });
 
 app.listen(PORT, console.log("Server starting on PORT ", PORT));
