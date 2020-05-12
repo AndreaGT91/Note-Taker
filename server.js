@@ -19,13 +19,15 @@ app.get("/notes", function(req, res) {
 });
 
 app.get("/api/notes", function(req, res) {
-  const notesArray = fs.readFileSync(outputPath, "utf8");
-  notes = JSON.parse(notesArray);
-  return res.json(notes);
-});
+  if (fs.existsSync(outputPath)) {
+    const notesArray = fs.readFileSync(outputPath, "utf8");
+    notes = JSON.parse(notesArray);
+  }
+  else {
+    notes = [];
+  };
 
-app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "public/index.html"));
+  return res.json(notes);
 });
 
 app.get("*", function(req, res) {
@@ -50,7 +52,7 @@ app.delete("/api/notes/:id", function(req, res) {
   // The ID should always be found, but check, just in case
   if (noteIndex != -1) {
     notes.splice(noteIndex, 1);
-    fs.writeFileSync(outputPath, JSON.stringify(notes));
+    fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2));
     return true
   }
   else {
