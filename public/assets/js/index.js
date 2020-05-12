@@ -1,4 +1,3 @@
-console.log('in index.js');
 var $noteTitle = $(".note-title");
 var $noteText = $(".note-textarea");
 var $saveNoteBtn = $(".save-note");
@@ -10,6 +9,7 @@ var activeNote = {};
 
 // A function for getting all notes from the db
 var getNotes = function() {
+  console.log('in getNotes');
   return $.ajax({
     url: "/api/notes",
     method: "GET"
@@ -110,10 +110,13 @@ var renderNoteList = function(notes) {
 
   var noteListItems = [];
 
+  console.log('notes.length: ', notes.length);
+
   for (var i = 0; i < notes.length; i++) {
     var note = notes[i];
 
-    var $li = $("<li class='list-group-item'>").data(note);
+    var $li = $("<li class='list-group-item'>");
+    $li.data(note);
     var $span = $("<span>").text(note.title);
     var $delBtn = $(
       "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
@@ -128,7 +131,9 @@ var renderNoteList = function(notes) {
 
 // Gets notes from the db and renders them to the sidebar
 var getAndRenderNotes = function() {
+  console.log('in getAndRenderNotes');
   return getNotes().then(function(data) {
+    console.log('Data.length: ', data.length);
     renderNoteList(data);
   });
 };
