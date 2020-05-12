@@ -19,6 +19,7 @@ app.get("/notes", function(req, res) {
 });
 
 app.get("/api/notes", function(req, res) {
+  // Make sure file exists, so readFileSync doesn't throw error
   if (fs.existsSync(outputPath)) {
     const notesArray = fs.readFileSync(outputPath, "utf8");
     notes = JSON.parse(notesArray);
@@ -48,16 +49,15 @@ app.post("/api/notes", function(req, res) {
 app.delete("/api/notes/:id", function(req, res) {
   // Must use '==', not '===', because one is numeric and one is string
   const noteIndex = notes.findIndex(note => {return (note.id == req.params.id)});
+  let deleted = false;
 
   // The ID should always be found, but check, just in case
   if (noteIndex != -1) {
     notes.splice(noteIndex, 1);
     fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2));
-    return true
-  }
-  else {
-    return false
+    deleted = true;
   };
+  res.json(deleted);
 });
 
 app.listen(PORT, console.log("Server starting on PORT ", PORT));
