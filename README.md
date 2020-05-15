@@ -4,9 +4,15 @@ Application that allows user to quickly and easily create notes. Each note has a
 ## Installation 
  `npm install` 
 
+## GitHub Repository
+[github.com/AndreaGT91/Note-Taker](https://github.com/AndreaGT91/Note-Taker)
+
+## Heroku Deployment
+[rocky-wildwood-54310.herokuapp.com/](https://rocky-wildwood-54310.herokuapp.com/)
+
 ## Usage 
  `node server.js`   
- [http://localhost:3000/](http://localhost:3000/)
+ [localhost:3000/](http://localhost:3000/)
 
 ## Questions 
  ![Andrea Bentley](https://avatars2.githubusercontent.com/u/58275699?v=4&s=48)  Andrea Bentley  (AndreaGT91)     
