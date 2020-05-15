@@ -1,6 +1,19 @@
 # Note-Taker
-Application that can write, save, and delete notes. It uses an express backend to save and retrieve note data from a JSON file.
+Application that allows user to quickly and easily create notes. Each note has a title and its text. The notes can be edited or deleted. The application uses an Express backend to save and retrieve note data from a JSON file.
 
+## Installation 
+ `npm install` 
+
+## Usage 
+ `node server.js`   
+ [http://localhost:3000/](http://localhost:3000/)
+
+## Questions 
+ ![Andrea Bentley](https://avatars2.githubusercontent.com/u/58275699?v=4&s=48)  Andrea Bentley  (AndreaGT91)     
+[andrea@bentleytech.com](mailto:andrea@bentleytech.com)
+
+
+## Assignment:
 # Unit 11 Express Homework: Note Taker
 
 ## Description

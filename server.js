@@ -42,7 +42,7 @@ app.post("/api/notes", function(req, res) {
     newNote.id = Date.now();
   };
   notes.push(newNote);
-  fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2));
+  writeNotes();
   res.json(newNote);
 });
 
@@ -54,10 +54,18 @@ app.delete("/api/notes/:id", function(req, res) {
   // The ID should always be found, but check, just in case
   if (noteIndex != -1) {
     notes.splice(noteIndex, 1);
-    fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2));
+    writeNotes();
     deleted = true;
   };
   res.json(deleted);
 });
+
+// Make sure directory exists before writing file
+function writeNotes() {
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR);
+  };
+  fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2));
+};
 
 app.listen(PORT, console.log("Server starting on PORT ", PORT));
